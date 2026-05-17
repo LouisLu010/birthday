@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>老爸生日快乐</title>
+  <style>
+    :root {
+      --bg: #070909;
+      --bg-2: #0f1216;
+      --ember: #ff6a00;
+      --ember-soft: rgba(255, 106, 0, 0.45);
+      --blood: #b31217;
+      --gold: #f5c542;
+      --gold-2: #ffd98b;
+      --text: #f7f1e4;
+      --muted: #a6a09a;
+      --panel: rgba(18, 20, 24, 0.92);
+      --stroke: rgba(245, 197, 66, 0.28);
+      --shadow: rgba(0, 0, 0, 0.5);
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 15%, rgba(255, 106, 0, 0.18), transparent 45%),
+        radial-gradient(circle at 85% 10%, rgba(179, 18, 23, 0.2), transparent 40%),
+        radial-gradient(circle at 50% 75%, rgba(245, 197, 66, 0.16), transparent 48%),
+        linear-gradient(180deg, #0a0c0f 0%, #070909 60%, #050505 100%);
+      font-family: "STZhongsong", "SimSun", "Microsoft YaHei", system-ui, serif;
+      display: flex;
+      justify-content: center;
+      padding: 24px 14px 56px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(120deg, rgba(255, 106, 0, 0.05) 0%, transparent 55%),
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 6px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .ember {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--ember);
+      box-shadow: 0 0 12px var(--ember-soft);
+      opacity: 0.85;
+      animation: float 6s linear infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(40px) scale(0.6); opacity: 0; }
+      30% { opacity: 1; }
+      100% { transform: translateY(-120px) scale(1); opacity: 0; }
+    }
+    .wrapper {
+      width: min(1000px, 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      position: relative;
+      z-index: 1;
+    }
+    .banner {
+      position: relative;
+      padding: 26px 24px 22px;
+      border-radius: 18px;
+      background: linear-gradient(140deg, rgba(179, 18, 23, 0.28), rgba(12, 14, 18, 0.95));
+      border: 1px solid rgba(245, 197, 66, 0.3);
+      box-shadow: 0 20px 40px var(--shadow);
+      overflow: hidden;
+    }
+    .banner::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 70% 20%, rgba(245, 197, 66, 0.25), transparent 55%);
+      pointer-events: none;
+    }
+    .sigil {
+      position: absolute;
+      right: 18px;
+      top: 18px;
+      width: clamp(80px, 16vw, 110px);
+      height: clamp(80px, 16vw, 110px);
+      border-radius: 50%;
+      border: 2px solid rgba(245, 197, 66, 0.5);
+      box-shadow: inset 0 0 18px rgba(245, 197, 66, 0.2), 0 0 18px rgba(245, 197, 66, 0.25);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: clamp(14px, 2vw, 18px);
+      letter-spacing: 2px;
+      color: var(--gold);
+      text-transform: uppercase;
+      background: radial-gradient(circle, rgba(245, 197, 66, 0.1), transparent 65%);
+    }
+    .sigil::before,
+    .sigil::after {
+      content: "✶";
+      position: absolute;
+      color: rgba(245, 197, 66, 0.7);
+      font-size: 18px;
+    }
+    .sigil::before {
+      left: 10px;
+      top: 12px;
+    }
+    .sigil::after {
+      right: 12px;
+      bottom: 8px;
+    }
+    .title {
+      font-size: clamp(28px, 4.2vw, 46px);
+      font-weight: 900;
+      letter-spacing: 2px;
+      margin: 0 0 8px;
+      text-shadow: 0 0 12px rgba(245, 197, 66, 0.4);
+    }
+    .subtitle {
+      font-size: clamp(16px, 2.1vw, 20px);
+      color: var(--muted);
+      margin: 0 0 14px;
+    }
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(179, 18, 23, 0.4);
+      border: 1px solid rgba(245, 197, 66, 0.45);
+      font-size: 13px;
+      color: var(--gold-2);
+      letter-spacing: 0.5px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 18px;
+    }
+    .card {
+      background: var(--panel);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid rgba(245, 197, 66, 0.2);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(245, 197, 66, 0.12), transparent 45%);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    .card h3 {
+      margin: 0 0 12px;
+      color: var(--gold);
+      font-size: 18px;
+      letter-spacing: 1px;
+    }
+    .quest {
+      border: 1px dashed rgba(245, 197, 66, 0.5);
+      border-radius: 12px;
+      padding: 14px;
+      background: rgba(245, 197, 66, 0.08);
+    }
+    .quest strong {
+      color: var(--gold-2);
+    }
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(245, 197, 66, 0.7), transparent);
+      margin: 14px 0;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    button {
+      cursor: pointer;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #120b07;
+      background: linear-gradient(135deg, var(--gold), #ffd56c);
+      box-shadow: 0 10px 20px rgba(245, 197, 66, 0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 24px rgba(245, 197, 66, 0.45);
+    }
+    .secondary {
+      background: linear-gradient(135deg, var(--blood), #ff4d4d);
+      color: #fff5f5;
+      box-shadow: 0 10px 18px rgba(179, 18, 23, 0.35);
+    }
+    .totem {
+      display: grid;
+      place-items: center;
+      width: 100%;
+      aspect-ratio: 4 / 2.4;
+      border-radius: 14px;
+      border: 1px solid rgba(245, 197, 66, 0.35);
+      background:
+        radial-gradient(circle at 40% 30%, rgba(179, 18, 23, 0.4), transparent 55%),
+        radial-gradient(circle at 70% 60%, rgba(255, 106, 0, 0.2), transparent 55%),
+        linear-gradient(140deg, rgba(18, 20, 24, 0.85), rgba(10, 12, 14, 0.96));
+      font-size: clamp(32px, 7vw, 60px);
+      letter-spacing: 10px;
+      color: var(--gold);
+      text-shadow: 0 0 18px var(--ember-soft);
+      margin-bottom: 16px;
+    }
+    .ability-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .ability-chip {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(245, 197, 66, 0.12);
+      border: 1px solid rgba(245, 197, 66, 0.35);
+      font-size: 13px;
+    }
+    .loot {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .loot span {
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      padding: 10px 6px;
+      background: rgba(179, 18, 23, 0.2);
+      border: 1px solid rgba(179, 18, 23, 0.45);
+      font-size: 12px;
+      text-align: center;
+    }
+    .pledge {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .achievement {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: rgba(10, 12, 14, 0.95);
+      border: 1px solid rgba(245, 197, 66, 0.4);
+      position: fixed;
+      right: 16px;
+      bottom: 20px;
+      z-index: 10;
+      box-shadow: 0 12px 22px rgba(0, 0, 0, 0.4);
+      animation: pop 0.35s ease;
+    }
+    .achievement.active {
+      display: flex;
+    }
+    .achievement strong {
+      color: var(--gold);
+    }
+    .spark {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 12px var(--ember-soft);
+      pointer-events: none;
+      animation: burst 0.9s ease forwards;
+    }
+    @keyframes pop {
+      from { transform: translateY(10px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes burst {
+      to {
+        transform: translate(var(--dx), var(--dy)) scale(0);
+        opacity: 0;
+      }
+    }
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+    @media (max-width: 640px) {
+      .banner {
+        padding: 18px;
+      }
+      .card {
+        padding: 16px;
+      }
+      .loot {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      button {
+        width: 100%;
+      }
+      .sigil {
+        position: static;
+        margin-left: auto;
+        margin-bottom: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <section class="banner">
+      <div class="sigil">Horde</div>
+      <div class="totem">H O R D E</div>
+      <h1 class="title">老爸 45 级升级成功！生日快乐！</h1>
+      <p class="subtitle">部落猎人 · 时光服常驻 · 今日成就解锁</p>
+      <div class="badge-row">
+        <div class="badge">为了部落！Lok'tar Ogar！</div>
+        <div class="badge">猎人本命：荒野守护</div>
+        <div class="badge">时光服：荣耀重燃</div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h3>主线任务</h3>
+        <div class="quest">
+          <p><strong>任务名称：</strong>庆祝老爸生日 · 史诗级</p>
+          <p><strong>任务目标：</strong>点亮祝福，释放猎人烟花，收下我们的爱</p>
+          <p><strong>任务奖励：</strong>快乐 +1000，健康 +500，欧气 +777</p>
+        </div>
+        <div class="actions">
+          <button id="levelUpBtn">点击升级</button>
+          <button class="secondary" id="achievementBtn">解锁成就</button>
+        </div>
+        <div class="divider"></div>
+        <div class="ability-list">
+          <span class="ability-chip">Aimed Shot</span>
+          <span class="ability-chip">Rapid Fire</span>
+          <span class="ability-chip">Hunter's Mark</span>
+          <span class="ability-chip">Feign Death</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>猎人专属 Buff</h3>
+        <ul>
+          <li>自动射击：幸福持续输出</li>
+          <li>野性守护：全家健康常驻</li>
+          <li>急速射击：好运连击暴击</li>
+          <li>召唤宠物：快乐随身跟随</li>
+        </ul>
+        <div class="badge">主宠：岁月狼 · 45 级</div>
+        <div class="divider"></div>
+        <div class="loot">
+          <span>史诗披风</span>
+          <span>幸运猎弓</span>
+          <span>时光勋章</span>
+          <span>部落战旗</span>
+          <span>永恒祝福</span>
+          <span>团圆之心</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>专属祝福</h3>
+        <p>老爸生日快乐！愿你在时光服一路顺风，装备永不吃亏，猎人宝宝永远听话。</p>
+        <p>愿你在现实世界里也一直满血满蓝，升级路上有我们并肩同行。</p>
+        <div class="badge">今日掉落：传奇快乐</div>
+        <div class="divider"></div>
+        <p>愿你的每一次开弓都有暴击，每一次狩猎都带回笑容。</p>
+      </div>
+    </section>
+
+    <section class="card pledge">
+      <h3>部落誓言</h3>
+      <p>今天，全家集结在奥格瑞玛门口，只为给最强猎人过生日。</p>
+      <p>愿你在艾泽拉斯与现实世界里，永远被爱与荣耀环绕。</p>
+      <div class="badge">口号：为了部落！</div>
+    </section>
+
+    <footer>点击“升级”会触发特效，手机端也可互动。</footer>
+  </div>
+
+  <div id="achievement" class="achievement">
+    <strong>成就达成：</strong>
+    <span>《最佳老爸》· 终身荣誉</span>
+  </div>
+
+  <script>
+    const levelUpBtn = document.getElementById("levelUpBtn");
+    const achievementBtn = document.getElementById("achievementBtn");
+    const achievement = document.getElementById("achievement");
+    const wrapper = document.querySelector(".wrapper");
+
+    const spawnSpark = (x, y) => {
+      const spark = document.createElement("span");
+      spark.className = "spark";
+      spark.style.left = `${x}px`;
+      spark.style.top = `${y}px`;
+      spark.style.setProperty("--dx", `${(Math.random() - 0.5) * 160}px`);
+      spark.style.setProperty("--dy", `${(Math.random() - 0.5) * 160}px`);
+      document.body.appendChild(spark);
+      setTimeout(() => spark.remove(), 900);
+    };
+
+    const spawnEmbers = () => {
+      for (let i = 0; i < 10; i++) {
+        const ember = document.createElement("span");
+        ember.className = "ember";
+        ember.style.left = `${Math.random() * 100}%`;
+        ember.style.bottom = "-20px";
+        ember.style.animationDelay = `${Math.random() * 4}s`;
+        ember.style.animationDuration = `${5 + Math.random() * 4}s`;
+        wrapper.appendChild(ember);
+        setTimeout(() => ember.remove(), 9000);
+      }
+    };
+
+    levelUpBtn.addEventListener("click", (event) => {
+      const rect = event.target.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2 + window.scrollY;
+      for (let i = 0; i < 20; i++) {
+        spawnSpark(x, y);
+      }
+      spawnEmbers();
+    });
+
+    achievementBtn.addEventListener("click", () => {
+      achievement.classList.add("active");
+      setTimeout(() => achievement.classList.remove("active"), 2600);
+    });
+  </script>
+</body>
+</html>
